@@ -666,22 +666,20 @@ export default function BadgeGeneratorPage({ onBack }) {
     e.preventDefault();
     if (!validate()) return;
     setIsGenerating(true);
-    setTimeout(() => {
-      const randomNum = Math.floor(10000 + Math.random() * 90000);
-      const generatedId = formData.builderId || `HHGOA-${randomNum}`;
-      const data = { ...formData, builderId: generatedId, id: Date.now().toString(), createdAt: new Date().toISOString() };
-      setStudentData(data);
-      const updated = [data, ...storedCards];
-      setStoredCards(updated);
-      try { localStorage.setItem("studentCards", JSON.stringify(updated)); } catch {}
-      setIsGenerating(false);
-    }, 1000);
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
+    const generatedId = formData.builderId || `HHGOA-${randomNum}`;
+    const data = { ...formData, builderId: generatedId, id: Date.now().toString(), createdAt: new Date().toISOString() };
+    setStudentData(data);
+    const updated = [data, ...storedCards];
+    setStoredCards(updated);
+    try { localStorage.setItem("studentCards", JSON.stringify(updated)); } catch {}
+    setIsGenerating(false);
   };
 
   const handleDownload = async () => {
     if (!cardRef.current) return;
     try {
-      const dataUrl = await toPng(cardRef.current, { quality: 0.98, pixelRatio: 2 });
+      const dataUrl = await toPng(cardRef.current, { pixelRatio: 2 });
       const link = document.createElement("a");
       link.download = `${(studentData?.name || "badge").replace(/\s+/g, "-")}-HH-Goa-Badge.png`;
       link.href = dataUrl;
