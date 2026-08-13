@@ -30,6 +30,18 @@ const css = `
   flex-direction: column;
 }
 
+/* ── dot-grid background (openhands hero-pixel-blast style) ── */
+.hhg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(0, 30, 15, 0.75) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  opacity: 0.45;
+}
+
 /* ── top nav bar ── */
 .hhg-nav {
   position: absolute;
