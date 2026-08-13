@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,100..900&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.hh-goa-template {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3300 / 4650;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  background-color: #1a4231;
+}
+
+.background-frame-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   VISUAL BOUNDING BOX ADJUSTMENT AREA (MOBILE-FRIENDLY PERCENTAGES)
+   ========================================================================== */
+
+/* 1. Profile Photo Frame Area */
+.hh-photo-frame {
+  position: absolute;
+  top: 26.2%;
+  left: 32.8%;
+  width: 34.4%;
+  height: 24.3%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. Name Bounding Box Area (Large Yellow Slot) */
+.hh-name-box {
+  position: absolute;
+  top: 59.1%;
+  left: 17.5%;
+  width: 65.0%;
+  height: 5.8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 3. Domain Bounding Box Area (Medium Yellow Slot next to </>) */
+.hh-domain-box {
+  position: absolute;
+  top: 68.3%;
+  left: 29.8%;
+  width: 46.5%;
+  height: 5.4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 4. Builder ID / Barcode Bounding Box Area (Small Yellow Slot on bottom-right) */
+.hh-builder-id-box {
+  position: absolute;
+  top: 85.8%;
+  left: 70.3%;
+  width: 27.5%;
+  height: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Inner Content Styling
+   ========================================================================== */
+
+.photo-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.builder-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-placeholder {
+  color: #0a6a39;
+  font-family: "Victor Mono", monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+}
+
+.hh-name-text {
+  color: #0a6a39;
+  font-family: "Victor Mono", monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.2;
+}
+
+/* Smaller base size for very small phones (320px) */
+@media (max-width: 360px) {
+  .hh-name-text {
+    font-size: 0.9rem;
+  }
+}
+
+
+
+.hh-domain-text {
+  color: #0a6a39;
+  font-family: "Victor Mono", monospace;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Smaller base size for very small phones (320px) */
+@media (max-width: 360px) {
+  .hh-domain-text {
+    font-size: 0.8rem;
+  }
+}
+
+
+
+
+.hh-builder-id-text {
+  color: #0a6a39;
+  font-family: "Victor Mono", monospace;
+  font-weight: 700;
+  font-size: 0.6rem;
+  letter-spacing: 0.02em;
+  /* Fix download shift: lock line-height so html-to-image renders identically */
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .hh-builder-id-text {
+    font-size: 0.45rem;
+  }
+}
+
+
