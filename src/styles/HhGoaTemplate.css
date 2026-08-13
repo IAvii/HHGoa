@@ -3,11 +3,12 @@
 .hh-goa-template {
   position: relative;
   width: 100%;
-  aspect-ratio: 3300 / 4650;
+  aspect-ratio: 1502 / 2048;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   background-color: #1a4231;
+  container-type: inline-size;
 }
 
 .background-frame-img {
@@ -99,7 +100,7 @@
   color: #0a6a39;
   font-family: "Victor Mono", monospace;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 4.8cqi;
   letter-spacing: 0.05em;
 }
 
@@ -107,7 +108,7 @@
   color: #0a6a39;
   font-family: "Victor Mono", monospace;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 5cqi;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
@@ -116,20 +117,11 @@
   line-height: 1.2;
 }
 
-/* Smaller base size for very small phones (320px) */
-@media (max-width: 360px) {
-  .hh-name-text {
-    font-size: 0.9rem;
-  }
-}
-
-
-
 .hh-domain-text {
   color: #0a6a39;
   font-family: "Victor Mono", monospace;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 4.4cqi;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -138,33 +130,18 @@
   width: 100%;
 }
 
-/* Smaller base size for very small phones (320px) */
-@media (max-width: 360px) {
-  .hh-domain-text {
-    font-size: 0.8rem;
-  }
-}
-
-
-
 
 .hh-builder-id-text {
   color: #0a6a39;
   font-family: "Victor Mono", monospace;
   font-weight: 700;
-  font-size: 0.6rem;
+  font-size: 2.4cqi;
   letter-spacing: 0.02em;
   /* Fix download shift: lock line-height so html-to-image renders identically */
   line-height: 1;
   display: flex;
   align-items: center;
   white-space: nowrap;
-}
-
-@media (max-width: 360px) {
-  .hh-builder-id-text {
-    font-size: 0.45rem;
-  }
 }
 
 

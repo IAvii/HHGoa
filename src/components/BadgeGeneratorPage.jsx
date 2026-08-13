@@ -10,6 +10,7 @@ import { toPng } from "html-to-image";
 import hackerHouseLogo from "../assets/Hacker house.png";
 import logoSvg from "../assets/2-47.svg";
 import frameImage from "../assets/Frame 6.png";
+import HhGoaTemplate from "./HhGoaTemplate";
 
 /* ─── styles ─────────────────────────────────────────────────────────────── */
 const css = `
@@ -477,6 +478,7 @@ const css = `
 
 .bg-card-container {
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  width: 320px;
 }
 
 /* action buttons */
@@ -553,51 +555,7 @@ const shrinkToFit = (el) => {
 
 const DOMAINS = ["Frontend Dev","Backend Dev","Fullstack Dev","Web3 / Blockchain","AI / ML Eng","Mobile Dev","Product Design","DevOps / Cloud","Other"];
 
-/* ─── Badge template (inline, no external CSS dependency) ────────────────── */
-function BadgeTemplate({ studentData }) {
-  const containerRef = useRef(null);
-  const nameRef = useRef(null);
-  const domainRef = useRef(null);
-  const builderIdRef = useRef(null);
 
-  const runShrinks = useCallback(() => {
-    shrinkToFit(nameRef.current);
-    shrinkToFit(domainRef.current);
-    shrinkToFit(builderIdRef.current);
-  }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new ResizeObserver(runShrinks);
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [runShrinks]);
-
-  useEffect(() => { runShrinks(); }, [studentData.name, studentData.domain, studentData.builderId, runShrinks]);
-
-  const photoStyle = {
-    transform: `scale(${studentData.photoZoom || 1}) translate(${studentData.photoPanX || 0}%, ${studentData.photoPanY || 0}%)`,
-  };
-
-  return (
-    <div className="hh-goa-template" ref={containerRef}>
-      <img src={frameImage} alt="HH Goa 2026 Frame" className="background-frame-img" />
-      <div className="hh-photo-frame">
-        {studentData.photoPreview ? (
-          <div className="photo-wrapper">
-            <img src={studentData.photoPreview} alt={studentData.name} style={photoStyle} className="builder-photo" />
-          </div>
-        ) : (
-          <div className="photo-placeholder">Photo</div>
-        )}
-      </div>
-      <div className="hh-name-box"><div ref={nameRef} className="hh-name-text">{studentData.name || "YOUR NAME"}</div></div>
-      <div className="hh-domain-box"><div ref={domainRef} className="hh-domain-text">{studentData.domain || "DOMAIN / ROLE"}</div></div>
-      <div className="hh-builder-id-box"><div ref={builderIdRef} className="hh-builder-id-text">{studentData.builderId || "HHGOA-00000"}</div></div>
-    </div>
-  );
-}
 
 /* ─── main component ──────────────────────────────────────────────────────── */
 export default function BadgeGeneratorPage({ onBack }) {
@@ -841,7 +799,7 @@ export default function BadgeGeneratorPage({ onBack }) {
             <div className="bg-badge-wrap">
               <p className="bg-badge-label">Badge Preview</p>
               <div ref={cardRef} className="bg-card-container">
-                <BadgeTemplate studentData={studentData} />
+                <HhGoaTemplate studentData={studentData} />
               </div>
               <div className="bg-badge-actions">
                 <button className="bg-download-btn" onClick={handleDownload}>
