@@ -536,6 +536,49 @@ const css = `
 .bg-form-panel::-webkit-scrollbar { width: 4px; }
 .bg-form-panel::-webkit-scrollbar-track { background: transparent; }
 .bg-form-panel::-webkit-scrollbar-thumb { background: rgba(254,225,1,0.2); border-radius: 0; }
+
+/* ── responsive ── */
+@media (max-width: 850px) {
+  .bg-page {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+  .bg-body {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+  .bg-form-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(254,225,1,0.14);
+    overflow: visible;
+    padding: 24px 20px;
+  }
+  .bg-preview-panel {
+    padding: 32px 20px 60px;
+  }
+  .bg-nav {
+    padding: 16px 20px;
+  }
+  .bg-nav-logo {
+    height: 32px;
+  }
+  .bg-nav-title {
+    font-size: 13px;
+  }
+  .bg-nav-studio {
+    display: none;
+  }
+  .bg-card-container {
+    width: 100%;
+    max-width: 320px;
+  }
+  .bg-badge-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 `;
 
 /* ─── helpers ─────────────────────────────────────────────────────────────── */
