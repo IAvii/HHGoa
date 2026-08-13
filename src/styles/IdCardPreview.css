@@ -1,0 +1,70 @@
+.id-card-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.download-btn,
+.share-x-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.download-btn {
+  background-color: #1a4231;
+  color: white;
+  box-shadow: 0 4px 6px rgba(26, 66, 49, 0.2);
+}
+
+.download-btn:hover {
+  background-color: #102a1e;
+  transform: translateY(-1px);
+}
+
+.share-x-btn {
+  background-color: #0f1419;
+  color: white;
+  box-shadow: 0 4px 6px rgba(15, 20, 25, 0.2);
+}
+
+.share-x-btn:hover {
+  background-color: #272c30;
+  transform: translateY(-1px);
+}
+
+.share-tip {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: #718096;
+  text-align: center;
+  max-width: 400px;
+}
