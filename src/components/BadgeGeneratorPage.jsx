@@ -689,7 +689,7 @@ export default function BadgeGeneratorPage({ onBack }) {
 
   const handleShare = () => {
     const text = `Just generated my Hacker House Goa 2026 builder badge! 🚀 #FrameInGoa`;
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank", "width=600,height=400");
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank");
   };
 
   const loadCard = (card) => {
