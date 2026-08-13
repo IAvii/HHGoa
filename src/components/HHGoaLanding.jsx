@@ -65,10 +65,12 @@ const css = `
   object-fit: contain;
 }
 
-.hhg-nav-right {
+.hhg-hero-actions {
   display: flex;
   align-items: center;
   gap: 40px;
+  margin-top: 48px;
+  pointer-events: auto;
 }
 
 .hhg-check-hype {
@@ -196,7 +198,7 @@ const css = `
 .hhg-modal-video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -236,6 +238,92 @@ const css = `
 .hhg-modal-mute:active {
   transform: scale(0.92);
 }
+
+/* ── responsive ── */
+@media (max-width: 900px) {
+  .hhg-nav {
+    padding: 30px 40px 0;
+  }
+  .hhg-hero-actions {
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .hhg-studio-logo {
+    width: 90px;
+  }
+  .hhg-cta {
+    width: 180px;
+    height: 54px;
+  }
+  .hhg-cta-label {
+    font-size: 24px;
+  }
+  .hhg-check-hype {
+    font-size: 18px;
+  }
+  .hhg-meta {
+    gap: 40px;
+  }
+  .hhg-hindi {
+    width: 120px;
+    bottom: -40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hhg-nav {
+    padding: 24px 20px 0;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .hhg-hero-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .hhg-studio-logo {
+    width: 70px;
+  }
+  .hhg-cta {
+    width: 150px;
+    height: 46px;
+  }
+  .hhg-cta-label {
+    font-size: 20px;
+  }
+  .hhg-check-hype {
+    font-size: 15px;
+  }
+  .hhg-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hhg-meta {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .hhg-meta-text {
+    font-size: 13px;
+  }
+  .hhg-hindi {
+    position: static;
+    width: 90px;
+    margin-top: 16px;
+  }
+  .hhg-modal-controls {
+    top: 16px;
+    right: 16px;
+  }
+  .hhg-modal-close,
+  .hhg-modal-mute {
+    width: 38px;
+    height: 38px;
+  }
+}
 `;
 
 /* ─── component ──────────────────────────────────────────────────────────── */
@@ -255,33 +343,10 @@ export default function HHGoaLanding({ onGenerateBadge }) {
     <div className="hhg">
       <style>{css}</style>
 
-      {/* ── top nav ── */}
       <nav className="hhg-nav">
         {/* left: studio logo only (Hacker House logo lives in the hero) */}
         <div className="hhg-nav-logos">
           <img src={logoSvg} alt="2:47pm Studio" className="hhg-studio-logo" />
-        </div>
-
-        {/* right: check hype link + create ID card CTA */}
-        <div className="hhg-nav-right">
-          <button
-            className="hhg-check-hype"
-            onClick={() => setShowModal(true)}
-          >
-            CHECK HYPE
-          </button>
-
-          <button className="hhg-cta" onClick={onGenerateBadge}>
-            <span className="hhg-cta-label">Create ID Card</span>
-            <div
-              className="hhg-cta-border hhg-cta-border-top"
-              style={{ backgroundImage: `url(${borderTopSvg})` }}
-            />
-            <div
-              className="hhg-cta-border hhg-cta-border-bottom"
-              style={{ backgroundImage: `url(${borderBottomSvg})` }}
-            />
-          </button>
         </div>
       </nav>
 
@@ -303,6 +368,28 @@ export default function HHGoaLanding({ onGenerateBadge }) {
         <div className="hhg-meta">
           <span className="hhg-meta-text">GOA, INDIA · 28 – 31 OCT 2026</span>
           <span className="hhg-meta-text">2:47 pm Studio</span>
+        </div>
+
+        {/* right: check hype link + create ID card CTA */}
+        <div className="hhg-hero-actions">
+          <button
+            className="hhg-check-hype"
+            onClick={() => setShowModal(true)}
+          >
+            CHECK HYPE
+          </button>
+
+          <button className="hhg-cta" onClick={onGenerateBadge}>
+            <span className="hhg-cta-label">Create ID Card</span>
+            <div
+              className="hhg-cta-border hhg-cta-border-top"
+              style={{ backgroundImage: `url(${borderTopSvg})` }}
+            />
+            <div
+              className="hhg-cta-border hhg-cta-border-bottom"
+              style={{ backgroundImage: `url(${borderBottomSvg})` }}
+            />
+          </button>
         </div>
       </div>
 
