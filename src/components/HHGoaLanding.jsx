@@ -1,331 +1,356 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import hackerHouseLogo from "../assets/Hacker house.png";
-import landingBg from "../assets/Landing-background.png";
 import logoSvg from "../assets/2-47.svg";
+import goaHindiSvg from "../assets/goa_hindi.svg";
 import prehypeVideo from "../assets/Prehype.mp4";
+import borderTopSvg from "../assets/002-group-54-14.svg";
+import borderBottomSvg from "../assets/155-group-54-27661.svg";
 
-const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,400;10..100,600;10..100,700&family=Victor+Mono:ital,wght@0,400;0,600;0,700;1,500&display=swap');
+/* ─── styles ─────────────────────────────────────────────────────────────── */
+const css = `
+@import url('https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,400;10..100,500;10..100,700&family=Victor+Mono:wght@600;700&display=swap');
 
-.hhg-landing {
-  --green: #0B6839;
-  --green-deep: #063017;
-  --sun: #FEE101;
-  --coral: #FF6A3D;
-  --sand: #FFFBE8;
-  --ink: #06170F;
-  --line: rgba(255,251,232,0.16);
+/* ── reset / root ── */
+.hhg * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  font-family: 'Victor Mono', monospace;
-  background: var(--green-deep);
-  color: var(--sand);
+.hhg {
+  --green:  #0B6839;
+  --yellow: #FEE101;
+  --white:  #FFFFFF;
+  --imbue:  'Imbue', Georgia, serif;
+  --mono:   'Victor Mono', 'Courier New', monospace;
+
+  font-family: var(--mono);
+  background: var(--green);
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.hhg-landing * {
-  box-sizing: border-box;
-}
-
-/* Background graphics */
-.hhg-landing .bg-image {
+/* ── top nav bar ── */
+.hhg-nav {
   position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.28;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.hhg-landing .bg-gradient {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(254, 225, 1, 0.12), transparent 60%),
-              radial-gradient(circle at 85% 80%, rgba(255, 106, 61, 0.15), transparent 50%),
-              linear-gradient(to bottom, rgba(6, 48, 23, 0.6), rgba(6, 23, 15, 0.95));
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Content Container */
-.hhg-landing .main-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 24px 36px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Header / Nav */
-.hhg-landing .nav {
+  top: 0; left: 0; right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  padding: 50px 80px 0;
+  z-index: 20;
 }
 
-.hhg-landing .brand-logos {
+.hhg-nav-logos {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
-.hhg-landing .hh-logo {
-  height: 44px;
+.hhg-studio-logo {
+  width: 113px;
+  height: 99px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
-.hhg-landing .studio-logo {
-  height: 32px;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(78%) sepia(82%) saturate(400%) hue-rotate(5deg) brightness(103%);
+.hhg-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
 
-.hhg-landing .event-tag {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--sun);
-}
-
-/* Center Hero */
-.hhg-landing .hero {
-  text-align: center;
-  margin: auto 0;
-}
-
-.hhg-landing .eyebrow {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.35em;
-  font-size: 13px;
-  color: var(--sun);
-  margin-bottom: 12px;
-}
-
-.hhg-landing h1 {
-  font-family: 'Imbue', serif;
-  font-size: clamp(52px, 8.5vw, 110px);
-  font-weight: 700;
-  line-height: 0.95;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  margin: 0;
-}
-
-.hhg-landing h1 .stroke {
-  -webkit-text-stroke: 2px var(--sand);
-  color: transparent;
-}
-
-.hhg-landing .hero-sub {
-  font-size: clamp(12px, 1.5vw, 16px);
+.hhg-check-hype {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: var(--mono);
   font-weight: 600;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--sand);
-  opacity: 0.85;
-  margin-top: 18px;
-}
-
-/* Options Action Container */
-.hhg-landing .actions-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  margin-top: 42px;
-  flex-wrap: wrap;
-}
-
-.hhg-landing .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family: 'Imbue', serif;
-  font-weight: 700;
-  text-transform: uppercase;
   font-size: 22px;
-  letter-spacing: 0.04em;
-  padding: 16px 42px;
+  line-height: 0.84em;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.hhg-check-hype:hover { opacity: 0.75; }
+
+/* APPLY / Create ID Card button */
+.hhg-cta {
+  position: relative;
+  width: 220px;
+  height: 66px;
+  background: var(--yellow);
   border: none;
   cursor: pointer;
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  min-width: 200px;
-}
-
-.hhg-landing .btn:hover {
-  transform: translate(-3px, -3px);
-}
-
-.hhg-landing .btn:active {
-  transform: translate(0, 0);
-}
-
-.hhg-landing .btn-hype {
-  background: var(--coral);
-  color: var(--sand);
-  box-shadow: 6px 6px 0 var(--ink), 6px 6px 0 1px var(--sand);
-}
-
-.hhg-landing .btn-create {
-  background: var(--sun);
-  color: var(--green-deep);
-  box-shadow: 6px 6px 0 var(--ink), 6px 6px 0 1px var(--sand);
-}
-
-/* Footer info line */
-.hhg-landing .footer-line {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 11px;
-  letter-spacing: 0.15em;
+  justify-content: center;
+  overflow: visible;
+  transition: opacity 0.15s;
+  padding: 0;
+}
+.hhg-cta:hover { opacity: 0.88; }
+
+.hhg-cta-label {
+  color: var(--green);
+  font-family: var(--imbue);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1em;
   text-transform: uppercase;
-  opacity: 0.65;
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 5;
+  user-select: none;
 }
 
-/* Video Modal */
-.hhg-landing .modal-overlay {
+.hhg-cta-border {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  background-repeat: repeat-x;
+  background-position: left top;
+  background-size: 101px 7px;
+  pointer-events: none;
+  z-index: 10;
+}
+.hhg-cta-border-top    { top: 0; }
+.hhg-cta-border-bottom { bottom: 0; }
+
+/* ── hero ── */
+.hhg-hero {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none; /* let clicks pass through to children */
+}
+
+.hhg-logo-wrap {
+  position: relative;
+  pointer-events: auto;
+}
+
+.hhg-hh-logo {
+  width: min(1162px, 90vw);
+  display: block;
+  object-fit: contain;
+}
+
+.hhg-hindi {
+  position: absolute;
+  /* mirrors the live site: sits just inside the right edge, slightly below center */
+  right: -10px;
+  bottom: -60px;
+  width: 154px;
+  height: 152px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* info strip below logo */
+.hhg-meta {
+  margin-top: 28px;
+  display: flex;
+  gap: 80px;
+  pointer-events: auto;
+}
+
+.hhg-meta-text {
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(14px, 1.6vw, 22px);
+  line-height: 0.84em;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* ── video modal ── */
+.hhg-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
-  background: rgba(6, 23, 15, 0.92);
-  backdrop-filter: blur(8px);
+  z-index: 200;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
 }
 
-.hhg-landing .modal-box {
-  position: relative;
+.hhg-modal-video {
   width: 100%;
-  max-width: 900px;
-  background: #000;
-  border: 2px solid var(--sun);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.hhg-landing .close-btn {
+.hhg-modal-controls {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  z-index: 10;
-  background: var(--coral);
-  color: var(--sand);
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  width: 36px;
-  height: 36px;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 210;
+}
+
+.hhg-modal-close,
+.hhg-modal-mute {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  border: 1.5px solid var(--yellow);
+  background: rgba(11, 104, 57, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--yellow);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: background 0.15s, transform 0.1s;
 }
 
-.hhg-landing video {
-  width: 100%;
-  max-height: 80vh;
-  display: block;
-  outline: none;
+.hhg-modal-close:hover,
+.hhg-modal-mute:hover {
+  background: rgba(11, 104, 57, 1);
+}
+
+.hhg-modal-close:active,
+.hhg-modal-mute:active {
+  transform: scale(0.92);
 }
 `;
 
+/* ─── component ──────────────────────────────────────────────────────────── */
 export default function HHGoaLanding({ onGenerateBadge }) {
-  const [showHypeModal, setShowHypeModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [muted, setMuted]        = useState(false);
+  const videoRef                  = useRef(null);
+
+  function toggleMute() {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setMuted(v => !v);
+    }
+  }
 
   return (
-    <div className="hhg-landing">
-      <style>{CSS}</style>
-      <div
-        className="bg-image"
-        style={{ backgroundImage: `url(${landingBg})` }}
-      />
-      <div className="bg-gradient" />
+    <div className="hhg">
+      <style>{css}</style>
 
-      <div className="main-content">
-        {/* Navigation / Header */}
-        <header className="nav">
-          <div className="brand-logos">
-            <img
-              src={hackerHouseLogo}
-              alt="Hacker House"
-              className="hh-logo"
+      {/* ── top nav ── */}
+      <nav className="hhg-nav">
+        {/* left: studio logo only (Hacker House logo lives in the hero) */}
+        <div className="hhg-nav-logos">
+          <img src={logoSvg} alt="2:47pm Studio" className="hhg-studio-logo" />
+        </div>
+
+        {/* right: check hype link + create ID card CTA */}
+        <div className="hhg-nav-right">
+          <button
+            className="hhg-check-hype"
+            onClick={() => setShowModal(true)}
+          >
+            CHECK HYPE
+          </button>
+
+          <button className="hhg-cta" onClick={onGenerateBadge}>
+            <span className="hhg-cta-label">Create ID Card</span>
+            <div
+              className="hhg-cta-border hhg-cta-border-top"
+              style={{ backgroundImage: `url(${borderTopSvg})` }}
             />
-            <img src={logoSvg} alt="2:47pm Studio" className="studio-logo" />
-          </div>
-          <div className="event-tag">Goa · Oct 28–31, 2026</div>
-        </header>
+            <div
+              className="hhg-cta-border hhg-cta-border-bottom"
+              style={{ backgroundImage: `url(${borderBottomSvg})` }}
+            />
+          </button>
+        </div>
+      </nav>
 
-        {/* Center Hero Section */}
-        <main className="hero">
-          <div className="eyebrow">Hacker House Goa 2026</div>
-          <h1>
-            Build <span className="stroke">The</span> Vibe
-          </h1>
-          <p className="hero-sub">4 days · one rhythm · everything intentional</p>
+      {/* ── hero ── */}
+      <div className="hhg-hero">
+        <div className="hhg-logo-wrap">
+          <img
+            src={hackerHouseLogo}
+            alt="Hacker House"
+            className="hhg-hh-logo"
+          />
+          <img
+            src={goaHindiSvg}
+            alt="गोवा"
+            className="hhg-hindi"
+          />
+        </div>
 
-          <div className="actions-row">
-            <button
-              className="btn btn-hype"
-              onClick={() => setShowHypeModal(true)}
-            >
-              🎬 Check Hype
-            </button>
-            <button className="btn btn-create" onClick={onGenerateBadge}>
-              🪪 Create ID Card
-            </button>
-          </div>
-        </main>
-
-        {/* Footer info line */}
-        <footer className="footer-line">
-          <span>Official Event Portal · hhgoa.com</span>
-          <span>Powered by 2:47pm Studio</span>
-        </footer>
+        <div className="hhg-meta">
+          <span className="hhg-meta-text">GOA, INDIA · 28 – 31 OCT 2026</span>
+          <span className="hhg-meta-text">2:47 pm Studio</span>
+        </div>
       </div>
 
-      {/* Prehype Video Modal */}
-      {showHypeModal && (
+      {/* ── video modal ── */}
+      {showModal && (
         <div
-          className="modal-overlay"
-          onClick={() => setShowHypeModal(false)}
+          className="hhg-modal-overlay"
+          onClick={() => setShowModal(false)}
         >
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+          <video
+            ref={videoRef}
+            src={prehypeVideo}
+            className="hhg-modal-video"
+            autoPlay
+            loop
+            playsInline
+            preload="auto"
+            onClick={e => e.stopPropagation()}
+          />
+
+          {/* modal controls: close + mute */}
+          <div className="hhg-modal-controls" onClick={e => e.stopPropagation()}>
+            {/* close button */}
             <button
-              className="close-btn"
-              onClick={() => setShowHypeModal(false)}
-              aria-label="Close modal"
+              className="hhg-modal-close"
+              onClick={() => setShowModal(false)}
+              aria-label="Close video"
             >
-              ✕
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5"
+                strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
-            <video controls autoPlay src={prehypeVideo}>
-              Your browser does not support the video tag.
-            </video>
+
+            {/* mute button */}
+            <button
+              className="hhg-modal-mute"
+              onClick={() => toggleMute()}
+              aria-label={muted ? "Unmute video" : "Mute video"}
+            >
+              {muted ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5"
+                  strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5"
+                  strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       )}
