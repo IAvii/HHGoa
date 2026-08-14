@@ -610,7 +610,24 @@ export default function BadgeGeneratorPage({ onBack }) {
   const [studentData, setStudentData]       = useState(null);
   const [storedCards, setStoredCards]       = useState([]);
   const [showSaved, setShowSaved]           = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [isDownloading, setIsDownloading] = useState(false);
   const cardRef = useRef(null);
+
+  useEffect(() => {
+    if (studentData && cardRef.current) {
+      let isMounted = true;
+      setDownloadUrl(null);
+      const timer = setTimeout(() => {
+        toPng(cardRef.current, { pixelRatio: 1.5, cacheBust: false })
+          .then((url) => { if (isMounted) setDownloadUrl(url); })
+          .catch((err) => console.error("Background PNG generation failed:", err));
+      }, 300);
+      return () => { isMounted = false; clearTimeout(timer); };
+    } else {
+      setDownloadUrl(null);
+    }
+  }, [studentData]);
 
   useEffect(() => {
     try {
@@ -677,14 +694,27 @@ export default function BadgeGeneratorPage({ onBack }) {
   };
 
   const handleDownload = async () => {
-    if (!cardRef.current) return;
+    if (!studentData) return;
+    setIsDownloading(true);
+
     try {
-      const dataUrl = await toPng(cardRef.current, { pixelRatio: 2 });
-      const link = document.createElement("a");
-      link.download = `${(studentData?.name || "badge").replace(/\s+/g, "-")}-HH-Goa-Badge.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch (err) { console.error(err); }
+      let finalUrl = downloadUrl;
+      
+      if (!finalUrl && cardRef.current) {
+        finalUrl = await toPng(cardRef.current, { pixelRatio: 1.5, cacheBust: false });
+      }
+
+      if (finalUrl) {
+        const link = document.createElement("a");
+        link.download = `${(studentData.name || "badge").replace(/\s+/g, "-")}-HH-Goa-Badge.png`;
+        link.href = finalUrl;
+        link.click();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleShare = () => {
@@ -843,11 +873,17 @@ export default function BadgeGeneratorPage({ onBack }) {
                 <HhGoaTemplate studentData={studentData} />
               </div>
               <div className="bg-badge-actions">
-                <button className="bg-download-btn" onClick={handleDownload}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                  Download Badge
+                <button className="bg-download-btn" onClick={handleDownload} disabled={isDownloading}>
+                  {isDownloading ? (
+                    "Preparing..."
+                  ) : (
+                    <>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                      </svg>
+                      Download Badge
+                    </>
+                  )}
                 </button>
                 <button className="bg-share-btn" onClick={handleShare}>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
