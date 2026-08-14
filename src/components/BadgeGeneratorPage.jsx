@@ -701,7 +701,7 @@ export default function BadgeGeneratorPage({ onBack }) {
       let finalUrl = downloadUrl;
       
       if (!finalUrl && cardRef.current) {
-        finalUrl = await toPng(cardRef.current, { pixelRatio: 1.5, cacheBust: false });
+        finalUrl = await toPng(cardRef.current, { pixelRatio: 2, cacheBust: false });
       }
 
       if (finalUrl) {
